@@ -4,6 +4,7 @@ target/
 .mvn/
 mvnw
 mvnw.cmd
+log
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
