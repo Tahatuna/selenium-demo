@@ -73,5 +73,12 @@ public class BasePage {
         logger.info("Element send keys operation has been completed. Element: {}", element);
     }
 
+    protected String getText(WebElement element) {
+        waitUntilVisible(element);
+        String text = element.getText();
+        logger.info("Element text is: {}", text);
+        return text;
+    }
+
 }
 
