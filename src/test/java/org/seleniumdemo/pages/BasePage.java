@@ -22,7 +22,11 @@ public class BasePage {
 
     protected void waitUntilClickable(WebElement element) {
         try {
-            Wait<WebDriver> wait = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(60)).pollingEvery(Duration.ofMillis(500)).ignoring(NoSuchElementException.class).ignoring(StaleElementReferenceException.class);
+            Wait<WebDriver> wait = new FluentWait<>(driver).
+                    withTimeout(Duration.ofSeconds(60)).
+                    pollingEvery(Duration.ofMillis(500)).
+                    ignoring(NoSuchElementException.class).
+                    ignoring(StaleElementReferenceException.class);
             wait.until(ExpectedConditions.elementToBeClickable(element));
         } catch (Exception e) {
             logger.error("Failed to wait for element to be clickable: Element: {}", element, e);
@@ -53,13 +57,27 @@ public class BasePage {
         }
     }
 
+    private void scrollToElementWithWebElement(WebElement element) {
+        try {
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("arguments[0].scrollIntoView(true);", element);
+        } catch (Exception e) {
+            logger.error("Error while scrolling to element: {}", element, e);
+        }
+    }
+
+    protected void scrollAndClick(WebElement element) {
+        scrollToElementWithWebElement(element);
+        element.click();
+    }
+
     protected void waitUntilVisible(WebElement element) {
         try {
-            Wait<WebDriver> wait = new FluentWait<>(driver)
-                    .withTimeout(Duration.ofSeconds(60))
-                    .pollingEvery(Duration.ofMillis(500))
-                    .ignoring(NoSuchElementException.class)
-                    .ignoring(StaleElementReferenceException.class);
+            Wait<WebDriver> wait = new FluentWait<>(driver).
+                    withTimeout(Duration.ofSeconds(60)).
+                    pollingEvery(Duration.ofMillis(500)).
+                    ignoring(NoSuchElementException.class).
+                    ignoring(StaleElementReferenceException.class);
             wait.until(ExpectedConditions.visibilityOf(element));
         } catch (Exception e) {
             Assert.fail("Web Element not visible: " + e.getMessage());
