@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.seleniumdemo.utilities.ConfigReader;
+import org.testng.Assert;
 
 public class TextBoxPage extends BasePage {
     private static final Logger logger = LogManager.getLogger(TextBoxPage.class);
@@ -20,6 +21,8 @@ public class TextBoxPage extends BasePage {
     private WebElement permanentAddress;
     @FindBy(id = "submit")
     private WebElement submit;
+    @FindBy(id= "name")
+    private WebElement name;
 
     public TextBoxPage(WebDriver driver) {
         super(driver);
@@ -28,11 +31,13 @@ public class TextBoxPage extends BasePage {
     }
 
     public void fillFormInTextBox() {
-        sendKeys(userName, ConfigReader.getProperty("userName"));
+        String currentUser = ConfigReader.getProperty("userName");
+        sendKeys(userName, currentUser);
         sendKeys(email, ConfigReader.getProperty("email"));
         sendKeys(currentAddress, ConfigReader.getProperty("currentAddress"));
         sendKeys(permanentAddress, ConfigReader.getProperty("permanentAddress"));
-        clickElement(submit);
+        scrollAndClick(submit);
+        Assert.assertEquals(getText(name), "Name:" + currentUser );
     }
 
 }
