@@ -66,5 +66,12 @@ public class BasePage {
         }
     }
 
+    protected void sendKeys(WebElement element, String text) {
+        waitUntilVisible(element);
+        element.clear();
+        element.sendKeys(text);
+        logger.info("Element send keys operation has been completed. Element: {}", element);
+    }
+
 }
 
