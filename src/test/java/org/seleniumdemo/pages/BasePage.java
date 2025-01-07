@@ -7,6 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
+import org.testng.Assert;
 
 import java.time.Duration;
 
@@ -51,5 +52,19 @@ public class BasePage {
             throw new RuntimeException("Unexpected error during element click: " + e.getMessage(), e);
         }
     }
+
+    protected void waitUntilVisible(WebElement element) {
+        try {
+            Wait<WebDriver> wait = new FluentWait<>(driver)
+                    .withTimeout(Duration.ofSeconds(60))
+                    .pollingEvery(Duration.ofMillis(500))
+                    .ignoring(NoSuchElementException.class)
+                    .ignoring(StaleElementReferenceException.class);
+            wait.until(ExpectedConditions.visibilityOf(element));
+        } catch (Exception e) {
+            Assert.fail("Web Element not visible: " + e.getMessage());
+        }
+    }
+
 }
 
