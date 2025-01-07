@@ -5,27 +5,22 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.seleniumdemo.utilities.ConfigReader;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
-import java.time.Duration;
-
 public class TestBase {
     private static final Logger logger = LogManager.getLogger(TestBase.class);
     private final String baseUrl = ConfigReader.getProperty("baseUrl");
-    private WebDriver driver;
-    private ChromeOptions chromeOptions;
-    private WebDriverWait webDriverWait;
+    protected WebDriver driver;
+    protected ChromeOptions chromeOptions;
 
     @BeforeClass
     public void setUp() {
         chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("start-maximized");
         driver = new ChromeDriver(chromeOptions);
-        webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     @BeforeMethod
@@ -39,9 +34,6 @@ public class TestBase {
         logger.info("Tests completed");
         if (driver != null) {
             driver.quit();
-        }
-        if (webDriverWait != null) {
-            webDriverWait = null;
         }
     }
 
