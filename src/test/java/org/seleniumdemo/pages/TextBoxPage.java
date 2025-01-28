@@ -30,7 +30,7 @@ public class TextBoxPage extends BasePage {
         logger.info("Loaded user.properties file for TextBoxPage");
     }
 
-    public void fillFormInTextBox() {
+    public ElementsPage fillFormInTextBox() {
         String currentUser = ConfigReader.getProperty("userName");
         sendKeys(userName, currentUser);
         sendKeys(email, ConfigReader.getProperty("email"));
@@ -38,6 +38,7 @@ public class TextBoxPage extends BasePage {
         sendKeys(permanentAddress, ConfigReader.getProperty("permanentAddress"));
         scrollAndClick(submit);
         Assert.assertEquals(getText(name), "Name:" + currentUser );
+        return new ElementsPage(driver);
     }
 
 }

@@ -12,6 +12,9 @@ public class ElementsPage extends BasePage {
     @FindBy(xpath = "//span[text()='Text Box']")
     private WebElement textBoxPageBtn;
 
+    @FindBy(xpath = "//span[text()='Check Box']")
+    private WebElement checkBoxPageBtn;
+
     public ElementsPage(WebDriver driver) {
         super(driver);
     }
@@ -20,6 +23,12 @@ public class ElementsPage extends BasePage {
         logger.info("Go to text box");
         clickElement(textBoxPageBtn);
         return new TextBoxPage(driver);
+    }
+
+    public CheckBoxPage goToCheckBox() {
+        logger.info("Go to checkbox");
+        clickElement(checkBoxPageBtn);
+        return new CheckBoxPage(driver);
     }
 
 }
